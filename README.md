@@ -1,4 +1,23 @@
-# Q1) Char-RNN (O/P)
+# CS5760 – Natural Language Processing  
+## Homework 4 — Part II
+### Student: Sai Vardhan Reddy Gummadisani
+### ID : 700755046
+
+------------------------------------------------------------------------------------
+
+# Q1) Character-Level RNN Language Model  
+
+### **Model Description**
+- Character → index → embedding  
+- LSTM with hidden size 128  
+- Many-to-many next-character prediction  
+- Teacher forcing during training  
+- Cross-entropy loss + Adam optimizer  
+- Sampling with temperature τ  
+
+-------------
+
+## **Training Output**
 
 Vocab size: 68
 Epoch 1, Loss = 2.4290
@@ -31,8 +50,21 @@ German’s mounce himse was
 ## Reflection
 Increasing **sequence length** allows the RNN to learn longer-range dependencies, but it increases training cost and makes vanishing gradients more likely. A larger **hidden size** gives the model more expressive power but can lead to slower training and overfitting if the dataset is small. The **temperature parameter τ** directly influences sampling creativity: τ < 1 produces stable but repetitive text, τ ≈ 1 creates balanced and natural text, while τ > 1 results in more diverse but often noisy or ungrammatical outputs. These effects match the behavior shown in lecture examples.
 
+------------------------------------------------------------
 
-#  Q2) Mini Transformer Encoder  (O/P)
+# Q2) Mini Transformer Encoder  
+
+### **Model Description**
+- Token embeddings (dimension 64)  
+- Sinusoidal positional encoding  
+- Scaled dot-product self-attention  
+- 8-head multi-head attention  
+- Residual connections + LayerNorm  
+- Feed-forward network (hidden size 256)
+
+------------------
+
+## **Output**
 
 Vocabulary (tokens): ['Sherlock', 'Holmes', 'loved', 'logic.', 'Watson', 'recorded', 'the', 'adventures.', 'The', 'detective', 'examined', 'clues', 'carefully.', 'A', 'case', 'begins', 'with', 'a', 'call.', 'They', 'walked', 'down', 'Baker', 'Street.', 'mystery', 'often', 'hides', 'in', 'plain', 'sight.', 'He', 'lit', 'his', 'pipe', 'and', 'thought.', 'client', 'explained', 'strange', 'events.', 'asked', 'few', 'precise', 'questions.', 'solved', 'puzzle', 'together.', '<PAD>']
 Max tokens in a sentence: 7
@@ -61,12 +93,24 @@ Attention matrix (first 8 tokens):
  [0.117 0.209 0.157 0.211 0.107 0.1   0.1  ]]
 
  ## Reflection
- Embedded input shape: [10, 7, 64]  
-Final contextual embeddings shape: [10, 7, 64]  
-Attention heatmap saved as q2_attention_heatmap.png  
+The multi-head self-attention mechanism allows each token to attend to all other tokens in the sentence, which gives the Transformer the ability to capture contextual relationships without recurrence. The LayerNorm steps ensure stable training, and the positional encoding provides token order information that the model otherwise lacks. 
+The heatmap clearly shows how attention distributes across tokens, matching the behavior described in lecture slides.
 
+------------------------------------------------------------------------------------------------
 
-# Q3) Attention Test (O/P)
+# Q3) Scaled Dot-Product Attention  
+
+### **Model Description**
+Implements the formula:
+\[
+\text{Attention}(Q, K, V) = \mathrm{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\]
+
+The script compares attention **with** and **without** scaling.
+
+------------------
+## **Output**
+
 Attention weights WITHOUT scaling (shape): torch.Size([1, 5, 5])
 Attention weights WITH scaling (shape): torch.Size([1, 5, 5])
 
